@@ -2,6 +2,7 @@
 
 This project is a **Next.js**-based web application for managing event registrations and staff activities using **Supabase** as the backend.
 
+
 ## 🚀 Features
 - 🔐 **User Authentication**: Secure login system via Supabase authentication.
 - 📝 **Event Registration**: Users can register for events, and their details are stored in the database.
@@ -9,9 +10,11 @@ This project is a **Next.js**-based web application for managing event registrat
 - 📊 **User Dashboard**: Displays event registration details and QR pass.
 - 🛠️ **Staff Dashboard**: Allows authorized staff to scan QR codes and access participant details.
 
+
 ## 🛠️ Tech Stack
 - 🖥️ **Frontend**: Next.js, React, TypeScript, Tailwind CSS, Lucide Icons
 - 🗄️ **Backend**: Supabase (PostgreSQL, Authentication, API)
+
 
 ## 📁 Project Structure
 ```
@@ -68,10 +71,12 @@ This project is a **Next.js**-based web application for managing event registrat
 
 ```
 
+
 ## ⚙️ Setup Instructions
 ### 📌 Prerequisites
 - 📦 Node.js & npm
 - 🏗️ Supabase project with authentication and database tables set up
+
 
 ### 📥 Installation
 1. 📂 Clone the repository:
@@ -99,9 +104,10 @@ This project is a **Next.js**-based web application for managing event registrat
 - 📷 **QR Code Scan**: Staff members can scan a participant's QR code for validation.
 - 🔑 **Role-based Access**: Staff members have access to different features than participants.
 
+
 ## 👥 Contributors
 - **Natthawat Primsirikunawut** ([GitHub](https://github.com/N0TAW00D))
 
+
 ## 📜 License
 This project is licensed under the MIT License.
-
