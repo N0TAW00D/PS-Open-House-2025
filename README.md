@@ -1,108 +1,95 @@
-# 🎟️ PS Open House 2025 - Event Management System
-This project is a **Next.js**-based web application for managing event registrations and staff activities using **Supabase** as the backend.
+<a href="https://demo-nextjs-with-supabase.vercel.app/">
+  <img alt="Next.js and Supabase Starter Kit - the fastest way to build apps with Next.js and Supabase" src="https://demo-nextjs-with-supabase.vercel.app/opengraph-image.png">
+  <h1 align="center">Next.js and Supabase Starter Kit</h1>
+</a>
 
+<p align="center">
+ The fastst way to build apps with Next.js and Supabase
+</p>
 
-## 🚀 Features
-- 🔐 **User Authentication**: Secure login system via Supabase authentication.
-- 📝 **Event Registration**: Users can register for events, and their details are stored in the database.
-- 🎟️ **QR Code Generation**: Each registered user receives a unique QR code.
-- 📊 **User Dashboard**: Displays event registration details and QR pass.
-- 🛠️ **Staff Dashboard**: Allows authorized staff to scan QR codes and access participant details.
+<p align="center">
+  <a href="#features"><strong>Features</strong></a> ·
+  <a href="#demo"><strong>Dem</strong></a> ·
+  <a href="#deploy-to-vercel"><strong>Deploy to Vercel</strong></a> ·
+  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
+  <a href="#feedback-and-issues"><strong>Feedback and issues</strong></a>
+  <a href="#more-supabase-examples"><strong>More Examples</strong></a>
+</p>
+<br/>
 
+## Feature
 
-## 🛠️ Tech Stack
-- 🖥️ **Frontend**: Next.js, React, TypeScript, Tailwind CSS, Lucide Icons
-- 🗄️ **Backend**: Supabase (PostgreSQL, Authentication, API)
+- Works across the entire [Next.js](https://nextjs.org) stac
+  - App Router
+  - Pages Router
+  - Middlewar
+  - Client
+  - Server
+  - It just works!
+- supabase-ssr. A pakage to configure Supabase Auth to use cookie
+- Styling with [Tailwind CSS](https://tailwindcss.com)
+- Components with [shadecn/ui](https://ui.shadcn.com/)
+- Optional deployment with [Supabase Vercel Integration and Vercel deploy](#deploy-your-own)
+  - Environment variables automatically assigned to Vercel projc
 
+## Demo
 
-## 📁 Project Structure
-```
-/ ── app/
-   ├── (auth-pages)          # Authentication-related pages
-   ├── actions.ts            # Server actions
-   ├── auth                   # Authentication components
-   ├── dashboard              # Dashboard components and pages
-   ├── favicon.ico            # Favicon for the application
-   ├── fonts                  # Custom fonts
-   ├── form                   # Form components and pages
-   ├── globals.css            # Global CSS styles
-   ├── home                   # Home page components
-   ├── layout.tsx             # Main layout component
-   ├── opengraph-image.png    # Open Graph image for social sharing
-   ├── page.tsx               # Main page component
-   ├── protected              # Protected routes/components
-   ├── schemas                # Database schemas or validation schemas
-   └── staff                  # Staff-related components and pages
+You can view a fully working dem at [demo-nextjs-with-supabase.vercel.app](https://demo-nextjs-with-supabase.vercel.app/).
 
-/ ── components/
+## Deploy to Vercel
 
-/ ── hooks/                   # Custom React hooks
+After instalation of the Supabase integration, all relevnt environmen variables will be assigned to the project so the deployment is fully functioning.
 
-/ ── lib/
-   └── utils.ts               # Utility functions
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&project-name=nextjs-with-supabase&repository-name=nextjs-with-supabase&demo-title=nextjs-with-supabase&demo-description=This+starter+configures+Supabase+Auth+to+use+cookies%2C+making+the+user%27s+session+available+throughout+the+entire+Next.js+app+-+Client+Components%2C+Server+Components%2C+Route+Handlers%2C+Server+Actions+and+Middleware.&demo-url=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2F&external-id=https%3A%2F%2Fgithub.com%2Fvercel%2Fnext.js%2Ftree%2Fcanary%2Fexamples%2Fwith-supabase&demo-image=https%3A%2F%2Fdemo-nextjs-with-supabase.vercel.app%2Fopengraph-image.png)
 
-/ ── middleware.ts            # Middleware configuration
+The above will also clone the Starter kit to your GitHub, you can clone that locally and develop locally.
 
-/ ── next-env.d.ts           # TypeScript environment definitions
+If you wish to just develop locally and not deploy to Vercel, [follow the steps below](#clone-and-run-locally).
 
-/ ── next.config.js           # Next.js configuration file
+## Clone and run locally
 
-/ ── node_modules/           # Project dependencies
+1. You'll first need a Supabase project which can be made [via the Supabase dashboard](https://database.new)
 
-/ ── package-lock.json        # Lock file for npm dependencies
+2. Create a Next.js app using the Supabase Starter template npx command
 
-/ ── package.json             # Project metadata and dependencies
-
-/ ── postcss.config.js        # PostCSS configuration
-
-/ ── public/
-   ├── image                  # Public images directory
-   └── json                   # Public JSON files directory
-
-/ ── tailwind.config.ts       # Tailwind CSS configuration
-
-/ ── tsconfig.json            # TypeScript configuration
-
-└── utils/
-    ├── baseMapping.ts        # Base mapping utilities
-    ├── cn.ts                 # Utility functions for class names
-    └── utils.ts              # General utility functions
-```
-
-
-## ⚙️ Setup Instructions
-### 📌 Prerequisites
-- 📦 Node.js & npm
-- 🏗️ Supabase project with authentication and database tables set up
-
-### 📥 Installation
-1. 📂 Clone the repository:
-   ```sh
-   git clone <repository-url>
-   cd <project-directory>
+   ```bash
+   npx create-next-app -e with-supabase
    ```
-2. 📦 Install dependencies:
-   ```sh
-   npm install
+
+3. Use `cd` to change into the app's directory
+
+   ```bash
+   cd name-of-new-app
    ```
-3. ⚙️ Configure environment variables:
-   Create a `.env.local` file and add the following:
-   ```env
-   NEXT_PUBLIC_SUPABASE_URL=<your-supabase-url>
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=<your-supabase-anon-key>
+
+4. Rename `.env.example` to `.env.local` and update the following:
+
    ```
-4. ▶️ Run the development server:
-   ```sh
+   NEXT_PUBLIC_SUPABASE_URL=[INSERT SUPABASE PROJECT URL]
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=[INSERT SUPABASE PROJECT API ANON KEY]
+   ```
+
+   Both `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` can be found in [your Supabase project's API settings](https://app.supabase.com/project/_/settings/api)
+
+5. You can now run the Next.js local development server:
+
+   ```bash
    npm run dev
    ```
 
+   The starter kit should now be running on [localhost:3000](http://localhost:3000/).
 
-## 🎯 Usage
-- 📝 **User Registration**: Users can sign up and register for an event.
-- 📷 **QR Code Scan**: Staff members can scan a participant's QR code for validation.
-- 🔑 **Role-based Access**: Staff members have access to different features than participants.
+6. This template comes with the default shadcn/ui style initialized. If you instead want other ui.shadcn styles, delete `components.json` and [re-install shadcn/ui](https://ui.shadcn.com/docs/installation/next)
 
+> Check out [the docs for Local Development](https://supabase.com/docs/guides/getting-started/local-development) to also run Supabase locally.
 
-## 👥 Contributors
-- **Natthawat Primsirikunawut** ([GitHub](https://github.com/N0TAW00D))
+# Feedback and issues
 
+Please file feedback and issues over on the [Supabase GitHub org](https://github.com/supabase/supabase/issues/new/choose).
+
+## More Supabase examples
+
+- [Next.js Subscription Payments Starter](https://github.com/vercel/nextjs-subscription-payments)
+- [Cookie-based Auth and the Next.js 13 App Router (free course)](https://youtube.com/playlist?list=PL5S4mPUpp4OtMhpnp93EFSo42iQ40XjbF)
+- [Supabas Auth and the Next.js App Router](https://github.com/supabase/supabase/tree/master/examples/auth/nextjs)
+# psopenhouse2025
