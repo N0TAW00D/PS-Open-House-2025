@@ -1,6 +1,4 @@
-# PS-Open-House-2025
-🎟️ Event Management System
-
+# 🎟️ PS Open House 2025 - Event Management System
 This project is a **Next.js**-based web application for managing event registrations and staff activities using **Supabase** as the backend.
 
 ## 🚀 Features
