@@ -1,0 +1,236 @@
+"use client"
+
+import { ChartComponent } from "@/components/ui/bigChart";
+import { DonutComponent } from "@/components/ui/donut";
+import { MenubarDemo } from "@/components/ui/menu";
+import { createClient } from "@/utils/supabase/client";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { signOutAction } from "../actions";
+import { baseNames } from "@/utils/baseMapping";
+
+// Initialize Supabase client
+const supabase = createClient();
+
+export default function Dashboard() {
+    const [uniqueUsers10, setUniqueUsers10] = useState(0);
+    const [uniqueUsers11, setUniqueUsers11] = useState(0);
+    const [baseCounts10, setBaseCounts10] = useState([]);
+    const [baseCounts11, setBaseCounts11] = useState([]);
+    const [counts, setCounts] = useState({ eventCount: 0, userCount: 0 });
+    const date10 = "2024-12-20"; // Use the desired date
+    const date11 = "2024-12-24"; // Use the desired date
+    const today = new Date();
+
+    useEffect(() => {
+        async function fetchData() {
+
+            // Fetch unique users
+            const uniqueUserCount10 = await getUniqueUsersByDate(date10);
+            setUniqueUsers10(uniqueUserCount10);
+
+            // Fetch base counts
+            const baseCountData10 = await getBaseCountsByDate(date10);
+            setBaseCounts10(baseCountData10);
+
+            // Fetch unique users
+            const uniqueUserCount11 = await getUniqueUsersByDate(date11);
+            setUniqueUsers11(uniqueUserCount11);
+
+            // Fetch base counts
+            const baseCountData11 = await getBaseCountsByDate(date11);
+            setBaseCounts11(baseCountData11);
+
+            const eventCount = await fetchEventCount(supabase);
+            const userCount = await fetchUserCount(supabase);
+
+            setCounts({ eventCount, userCount });
+        }
+
+        fetchData();
+    }, []);
+
+    async function getUniqueUsersByDate(date) {
+        const { data, error } = await supabase.rpc("unique_users_by_date", { filter_date: date });
+
+        if (error) {
+            console.error("Error fetching unique users:", error);
+            return 0;
+        }
+
+        return data[0]?.unique_user_count || 0;
+    }
+
+    async function getBaseCountsByDate(date) {
+        const { data, error } = await supabase.rpc("base_counts_by_date", { filter_date: date });
+
+        if (error) {
+            console.error("Error fetching base counts:", error);
+            return [];
+        }
+
+        return data;
+    }
+
+    async function fetchEventCount(supabase) {
+        const { count, error } = await supabase
+            .from("event_registration")
+            .select("*", { count: "exact", head: true });
+
+        if (error) {
+            console.error("Error fetching event count:", error);
+            return 0;
+        }
+
+        return count || 0;
+    }
+
+    async function fetchUserCount(supabase) {
+        const { count, error } = await supabase
+            .from("role")
+            .select("*", { count: "exact", head: true });
+
+        if (error) {
+            console.error("Error fetching user count:", error);
+            return 0;
+        }
+
+        return count || 0;
+    }
+
+    const enrichedBaseCounts10 = Object.keys(baseNames).map((baseKey) => {
+        const baseData = baseCounts10.find((base) => base.base_number === baseKey) || { count: 0 };
+        return {
+            base_number: baseKey,
+            description: baseNames[baseKey],
+            count: baseData.count,
+        };
+    });
+
+    const enrichedBaseCounts11 = Object.keys(baseNames).map((baseKey) => {
+        const baseData = baseCounts11.find((base) => base.base_number === baseKey) || { count: 0 };
+        return {
+            base_number: baseKey,
+            description: baseNames[baseKey],
+            count: baseData.count,
+        };
+    });
+
+    const totalUniqueUsers = uniqueUsers10 + uniqueUsers11;
+
+    const differUser = counts.userCount - counts.eventCount;
+
+    return (
+        <>
+            <div className="mx-auto space-y-6">
+                <div className="flex items-center justify-center">
+                    <MenubarDemo />
+                </div>
+                <div className="flex w-full space-x-2">
+                    <DonutComponent
+                        data={[
+                            { browser: "Unsuccess", visitors: differUser, fill: "hsl(var(--chart-3))" },
+                            { browser: "Checked In", visitors: counts.eventCount, fill: "hsl(var(--chart-2))" },
+                            { browser: "Success", visitors: totalUniqueUsers, fill: "hsl(var(--chart-1))" },
+                        ]}
+                    />
+                    <ChartComponent
+                        uniqueUsers10={uniqueUsers10}
+                        uniqueUsers11={uniqueUsers11}
+                        enrichedBaseCounts10={enrichedBaseCounts10}
+                        enrichedBaseCounts11={enrichedBaseCounts11}
+                    />
+                </div>
+            </div>
+            <div className="p-6">
+                <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+
+                <div className="mb-6">
+                    <h2 className="text-xl font-semibold">Unique Users</h2>
+                    <p>{uniqueUsers10} users on {date10}</p>
+                </div>
+
+                <div>
+                    <h2 className="text-xl font-semibold">Base Counts</h2>
+                    <ul>
+                        {enrichedBaseCounts10.map((base) => (
+                            <li key={base.base_number}>
+                                {base.description}: {base.count} scan
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            <div className="p-6">
+                <h1 className="text-2xl font-bold mb-4">Dashboard</h1>
+
+                <div className="mb-6">
+                    <h2 className="text-xl font-semibold">Unique Users</h2>
+                    <p>{uniqueUsers11} users on {date11}</p>
+                </div>
+
+                <div>
+                    <h2 className="text-xl font-semibold">Base Counts</h2>
+                    <ul>
+                        {enrichedBaseCounts11.map((base) => (
+                            <li key={base.base_number}>
+                                {base.description}: {base.count} scan
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold">Counts</h2>
+                <p>Event: {counts.eventCount}</p>
+                <p>Users: {counts.userCount}</p>
+            </div>
+
+
+
+            {/* For donut chart */}
+            Donutttttt
+            {counts.userCount},
+            {counts.eventCount},
+            {totalUniqueUsers}
+            <br></br>
+
+            {/* For bar chart */}
+
+            uniqueeee10000<br />
+            {uniqueUsers10}
+            {enrichedBaseCounts10.map((base) => (
+                <li key={base.base_number}>
+                    {base.description}: {base.count} scan
+                </li>
+            ))}
+
+            uniqueeee1111111<br />
+            {uniqueUsers11}
+            {enrichedBaseCounts11.map((base) => (
+                <li key={base.base_number}>
+                    {base.description}: {base.count} scan
+                </li>
+            ))}
+            <br />
+
+            <ul>
+                {baseCounts10.map((base) => (
+                    <li key={base.base_number}>
+                        {base.base_number}: {base.count} scans
+                    </li>
+                ))}
+            </ul>
+
+
+
+            <div className="flex items-center justify-center pt-4">
+                <form action={signOutAction}>
+                    <Button type="submit" variant="destructive">
+                        ออกจากระบบ
+                    </Button>
+                </form>
+            </div>
+        </>
+    );
+}
