@@ -35,26 +35,6 @@ This project is a **Next.js**-based web application for managing event registrat
    └── staff                  # Staff-related components and pages
 
 / ── components/
-   ├── circleBase.tsx        # Circle base component
-   ├── comboBox.tsx          # Combo box component
-   ├── dashboard.tsx          # Dashboard component
-   ├── deploy-button.tsx      # Button for deployment actions
-   ├── env-var-warning.tsx    # Warning for missing environment variables
-   ├── form-message.tsx       # Message display for forms
-   ├── header-auth.tsx        # Header component for authentication pages
-   ├── hero.tsx               # Hero section component
-   ├── loadDash.tsx           # Loading dashboard component
-   ├── logincard.tsx          # Login card component
-   ├── logview.tsx            # Log view component for displaying logs
-   ├── next-logo.tsx          # Next.js logo component
-   ├── qrReader.tsx           # QR code reader component
-   ├── scanHistory.tsx        # Component to display scan history
-   ├── submit-button.tsx       # Submit button component
-   ├── supabase-logo.tsx      # Supabase logo component
-   ├── theme-switcher.tsx     # Component to switch themes
-   ├── tutorial               # Tutorial-related components/pages
-   ├── typography             # Typography styles/components
-   └── ui                     # UI related components
 
 / ── hooks/                   # Custom React hooks
 
